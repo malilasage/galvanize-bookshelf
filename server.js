@@ -37,8 +37,6 @@ app.use(express.static(path.join('public')));
 //   if (/json/.test(req.get('Accept'))) {
 //     return next();
 //   }
-//
-//   res.sendStatus(406);
 // });
 
 const books = require('./routes/books');
@@ -68,6 +66,7 @@ app.use((err, _req, res, _next) => {
   console.error(err.stack);
   res.sendStatus(500);
 });
+
 
 const port = process.env.PORT || 8000;
 

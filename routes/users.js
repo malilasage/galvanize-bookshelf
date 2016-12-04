@@ -13,12 +13,13 @@ var knex = require('knex')(db);
 
 // YOUR CODE HERE
 
-router.get('/', (req, res, next) => {
-  res.send('Users');
-})
+// router.get('/', (req, res, next) => {
+//   res.send('Users');
+// })
 
 router.post('/', (req, res, next) => {
   var hash = bcrypt.hashSync(req.body.password, 8);
+  var 
 
   knex('users')
   .where({username: req.body.username})
@@ -26,9 +27,10 @@ router.post('/', (req, res, next) => {
     if(!results) {
       knex('users')
       .insert({
-        username: req.body.username,
-        password_hash: hash
-      })
+        first_name: req.body.username,
+        last_name: req
+        hashed_password: hash,
+      }, '*')
       .then(function(result) {
         res.send('User Created');
       })

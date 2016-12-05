@@ -14,10 +14,6 @@ var knex = require('knex')(db);
 
 // YOUR CODE HERE
 
-// router.get('/', (req, res, next) => {
-//   res.send('Users');
-// })
-
 router.post('/users', (req, res, next) => {
   var hash = bcrypt.hashSync(req.body.password, 12);
 

@@ -6,6 +6,7 @@ const express = require('express');
 // eslint-disable-next-line new-cap
 
 const router = express.Router();
+const {camelizeKeys, decamelizeKeys} = require('humps');
 var bcrypt = require('bcrypt');
 var db = require('../knexfile.js')['development'];
 var knex = require('knex')(db);
@@ -17,30 +18,21 @@ var knex = require('knex')(db);
 //   res.send('Users');
 // })
 
-router.post('/', (req, res, next) => {
-  var hash = bcrypt.hashSync(req.body.password, 8);
-  var 
+router.post('/users', (req, res, next) => {
+  var hash = bcrypt.hashSync(req.body.password, 12);
 
   knex('users')
-  .where({username: req.body.username})
-  .then(function(results) {
-    if(!results) {
-      knex('users')
-      .insert({
-        first_name: req.body.username,
-        last_name: req
-        hashed_password: hash,
-      }, '*')
-      .then(function(result) {
-        res.send('User Created');
-      })
-      .catch(function(err) {
-        next(err);
-      });
-    }else {
-      res.status(400).send('User already exists');
-    }
-  })
-})
+  .insert({
+    first_name: req.body.firstName,
+    last_name: req.body.lastName,
+    email: req.body.email,
+    hashed_password: hash
+  }, '*')
+  .then((result) => {
+    const user = camelizeKeys(result[0]);
+    delete user.hashedPassword;
+    res.send(user);
+  });
+});
 
 module.exports = router;

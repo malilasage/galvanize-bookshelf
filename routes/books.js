@@ -9,7 +9,6 @@ const boom = require('boom');
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
-// YOUR CODE HERE
 router.get('/books', function(req, res, next) {
   knex('books')
     .orderBy('title')

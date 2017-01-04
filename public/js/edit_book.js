@@ -1,4 +1,4 @@
-(function() {
+d(function() {
   'use strict';
 
   const bookId = window.QUERY_PARAMETERS.id;
